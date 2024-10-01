@@ -11,7 +11,7 @@
     <!-- Fav Icon  -->
     <link rel="shortcut icon" href="{{ asset('material/images/favicon.png') }}">
     <!-- Page Title  -->
-    <title>Project PKL- Akuntan 2024</title>
+    <title>Akuntan</title>
     <!-- StyleSheets  -->
     <link rel="stylesheet" href="{{ asset('material/assets/css/dashlite.css?ver=2.9.0') }}">
     <link id="skin-default" rel="stylesheet" href="{{ asset('material/assets/css/theme.css?ver=2.9.0') }}">
