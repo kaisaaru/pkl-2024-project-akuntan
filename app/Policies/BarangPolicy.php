@@ -19,6 +19,7 @@ class BarangPolicy
     /**
      * Determine whether the user can view the model.
      */
+
     public function view(User $user, Barang $barang) : bool
     {
         // return $user->id === $barang->user_id;
@@ -29,6 +30,16 @@ class BarangPolicy
         // return $user->id === ->user_id;
     }
 
+
+    public function view(User $user, Barang $barang): bool
+    {
+        //
+    }
+
+    /**
+     * Determine whether the user can create models.
+     */
+
     public function create(User $user): bool
     {
         //
@@ -37,6 +48,11 @@ class BarangPolicy
     /**
      * Determine whether the user can update the model.
      */
+
+    public function update(User $user, Barang $barang): bool
+    {
+        //
+    }
 
 
     /**

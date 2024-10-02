@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
+
 use App\Models\Perusahaan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
+
 class Barang extends Model
 {
     use HasFactory;
+
 
     // protected $fillable = ['nama_barang', 'jumlah_barang', 'potongan', 'total_bayar'];
 
@@ -67,5 +70,6 @@ class Barang extends Model
     // {
     //     return $this->hasMany(detail_po::class, 'barang_id', 'barang_id');
     // }
+
 
 }

@@ -6,11 +6,14 @@ use App\Models\Barang;
 use App\Http\Requests\StoreBarangRequest;
 use App\Http\Requests\UpdateBarangRequest;
 
-class BarangController
+
+class BarangController extends Controller
+
 {
     /**
      * Display a listing of the resource.
      */
+
     public function index($ids)
     {
         try {
@@ -26,6 +29,11 @@ class BarangController
             // If this is a web route, you might want to redirect with an error message
             return response()->json(['error' => $e->getMessage()], 400);
         }
+
+    public function index()
+    {
+        //
+
     }
 
     /**

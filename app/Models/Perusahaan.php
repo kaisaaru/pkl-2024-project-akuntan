@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
+
 use App\Models\Barang;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
+
 class Perusahaan extends Model
 {
     use HasFactory;
+
     protected $hidden = [
         'remember_token',
     ];
@@ -51,4 +54,5 @@ class Perusahaan extends Model
             $perusahaan->updated_at = now()->addHours(7);
         });
     }
+
 }

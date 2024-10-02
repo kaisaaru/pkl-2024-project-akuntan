@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Models\Perusahaan;
 use Illuminate\Support\Facades\Auth;
 //use App\Http\Requests\StorePerusahaanRequest;
 //use App\Http\Requests\UpdatePerusahaanRequest;
 
-class PerusahaanController
+
+class PerusahaanController extends Controller
+
 {
     /**
      * Display a listing of the resource.
