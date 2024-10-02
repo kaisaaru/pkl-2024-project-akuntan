@@ -5,89 +5,74 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Perusahaan;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\StorePerusahaanRequest;
-use App\Http\Requests\UpdatePerusahaanRequest;
-use App\Repository\Perusahaan\PerusahaanRepository;
+//use App\Http\Requests\StorePerusahaanRequest;
+//use App\Http\Requests\UpdatePerusahaanRequest;
 
-class PerusahaanController extends Controller
+class PerusahaanController
 {
-    protected $perusahaanRepository;
-
-    public function __construct(PerusahaanRepository $perusahaanRepository)
-    {
-        $this->perusahaanRepository = $perusahaanRepository;
-    }
-
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         try {
-           return $this->perusahaanRepository->index();
+            // Mendapatkan kode_perusahaan dari user yang sedang login
+            $userKodePerusahaan = Auth::user()->kode_perusahaan;
+            $developer = 'Developer';
+
+            // Mendapatkan data perusahaan, tetapi hanya yang tidak sesuai dengan kode_perusahaan user
+            $perusahaanData = Perusahaan::where('jenis', '!=', $developer)->paginate(15);
+            return view('relasi.perusahaan', ['data' => $perusahaanData]);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        return view('relasi.create');
+        //
     }
 
-    public function store(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store($request)
     {
-        try {
-            $validatedData = $request->validate([
-                'nama_perusahaan' => 'required',
-                'jenis' => 'required',
-                'alamat_kantor' => 'required',
-                'alamat_gudang' => 'required',
-                'nama_pimpinan' => 'required',
-                'no_telepon' => 'required',
-                'plafon_debit' => 'nullable',
-                'plafon_kredit' => 'nullable',
-            ]);
-
-            return $this->perusahaanRepository->store($validatedData);
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
-        }
+        //
     }
 
-    public function edit($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(Perusahaan $perusahaan)
     {
-        try {
-            // $data = $this->perusahaanRepository->edit($id);
-            return $this->perusahaanRepository->edit($id);
-            // return view('relasi.edit', compact('data'));
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
-        }
+        //
     }
 
-    public function update($id, Request $request)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Perusahaan $perusahaan)
     {
-        try {
-            return $this->perusahaanRepository->update($id, $request);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
+        //
     }
 
-    public function destroy($id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update($request, Perusahaan $perusahaan)
     {
-        try {
-            return $this->perusahaanRepository->destroy($id);
-        } catch (\Exception $e) {
-            return redirect('/relasi')->with('error', 'Error deleting perusahaan.');
-        }
+        //
     }
 
-    public function profile()
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Perusahaan $perusahaan)
     {
-        return view('relasi.profile');
-    }
-
-    public function profileedit()
-    {
-        return view('relasi.edit-profile');
+        //
     }
 }

@@ -6,65 +6,73 @@ use App\Models\Kategori;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreKategoriRequest;
 use App\Http\Requests\UpdateKategoriRequest;
-use App\Repository\Kategori\KategoriRepository;
 
-class KategoriController extends Controller
+class KategoriController
 {
-    protected $kategoriRepository;
-
-    public function __construct(KategoriRepository $kategoriRepository)
-    {
-        $this->kategoriRepository = $kategoriRepository;
-    }
-
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         try {
-            return $this->kategoriRepository->index();            
+            $data = Kategori::all();
+
+            // if (request('search')) {
+            //     $data = Kategori::where('kategori_barang', 'LIKE', '%' . request('search') . '%')->paginate(15);
+
+            //     return view('kategori.kategori', compact('data'));
+            // }
+
+            return view('kategori.kategori', ['data' => Kategori::paginate(15)]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         }
     }
-
-    public function store(Request $request)
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-        $validatedData = $request->validate([
-            'kategori_barang' => 'required|string',
-        ]);
-        try {
-            return $this->kategoriRepository->store($validatedData);            
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
+        //
     }
 
-    public function edit($id)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreKategoriRequest $request)
     {
-        try {
-            return $this->kategoriRepository->edit($id);            
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
+        //
     }
 
-    public function update($id, Request $request)
+    /**
+     * Display the specified resource.
+     */
+    public function show(Kategori $kategori)
     {
-        $validatedData = $request->validate([
-            'kategori_barang' => 'required|unique:kategoris,kategori_barang',
-        ]);
-        try {
-            return $this->kategoriRepository->update($validatedData, $id);            
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
+        //
     }
 
-    public function destroy($id)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Kategori $kategori)
     {
-        try {
-            return $this->kategoriRepository->destroy($id);            
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateKategoriRequest $request, Kategori $kategori)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Kategori $kategori)
+    {
+        //
     }
 }

@@ -3,128 +3,76 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
-use App\Models\Kategori;
-use App\Models\Kelompok;
-use App\Models\Perusahaan;
-use App\Models\PurchaseOrder;
-use App\Models\User;
-use App\Repository\Barang\BarangRepository;
-use Illuminate\Http\Request;
-use Carbon\Carbon;
+use App\Http\Requests\StoreBarangRequest;
+use App\Http\Requests\UpdateBarangRequest;
 
-class BarangController extends Controller
+class BarangController
 {
-    protected $barangRepository;
-
-    public function __construct(BarangRepository $barangRepository)
-    {
-        $this->barangRepository = $barangRepository;
-    }
-
-    public function index()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index($ids)
     {
         try {
-            $id = auth()->user();
-            $ids = $id->id;
-            return $this->barangRepository->index($ids);
+            // $userBarang = Barang::where('user_id', $ids)->paginate(15);
+            $userBarang = Barang::paginate(15);
+            // Retrieving these variables once is sufficient
+            $kategori = Kategori::all();
+            $kelompokOptions = Kelompok::all();
+            $perusahaan = Perusahaan::all();
+
+            return view('barang.barang', ['data' => $userBarang], compact('kelompokOptions', 'kategori', 'perusahaan'));
         } catch (\Exception $e) {
+            // If this is a web route, you might want to redirect with an error message
             return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        try {
-            return $this->barangRepository->create();
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
+        //
     }
 
-    public function store(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreBarangRequest $request)
     {
-        $validatedData = $request->validate([
-            'nama_barang' => 'required|string',
-            'satuan' => 'required|string',
-            'kategori' => 'required|string',
-            'kelompok' => 'required|string',
-            'harga_beli' => 'required|numeric',
-            'perusahaan' => 'required|string',
-        ]);
-
-        try {
-            return $this->barangRepository->store($request);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
+        //
     }
 
-    public function edit($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(Barang $barang)
     {
-        try {
-            return $this->barangRepository->edit($id);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
+        //
     }
 
-    public function update($id, Request $request)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Barang $barang)
     {
-        $validatedData = $request->validate([
-            'nama_barang' => 'required|string',
-            'satuan' => 'required|string',
-            'kategori' => 'required|string',
-            'kelompok' => 'required|string',
-            'harga_beli' => 'required|numeric',
-            'perusahaan' => 'required|string',
-        ]);
-
-        try {
-            return $this->barangRepository->update($id, $validatedData);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
+        //
     }
 
-    public function destroy($id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateBarangRequest $request, Barang $barang)
     {
-        try {
-            return $this->barangRepository->destroy($id);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
+        //
     }
 
-    public function print()
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Barang $barang)
     {
-        try {
-            return $this->barangRepository->print();
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
-    }
-
-    public function sobarangmanual()
-    {
-        try {
-            return $this->barangRepository->sobarangmanual();
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
-    }
-
-    public function sobarangupdate(Request $request)
-    {
-        $validatedData = $request->validate([
-            'barang_id' => 'required|string',
-            'sistem' => 'required|string',
-            'phisik' => 'required|integer',
-            'ket' => 'required|string',
-        ]);
-        try {
-            return $this->barangRepository->sobarangupdate($validatedData);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
+        //
     }
 }
